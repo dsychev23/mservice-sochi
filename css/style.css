@@ -177,7 +177,7 @@ p { color: var(--text-dim); margin: 0 0 14px; }
 .hero-stats div span { font-size: 13px; color: var(--text-dim); }
 
 /* Sections */
-section { padding: 90px 0; border-top: 1px solid var(--border); }
+section { padding: 90px 0; border-top: 1px solid var(--border); scroll-margin-top: 84px; }
 .section-head { max-width: 640px; margin-bottom: 48px; }
 
 /* Brands strip */
@@ -259,6 +259,44 @@ section { padding: 90px 0; border-top: 1px solid var(--border); }
 .reviews-score .stars { color: #ffb020; letter-spacing: 2px; font-size: 18px; }
 .reviews-banner .rb-text { flex: 1; min-width: 240px; }
 .reviews-banner .rb-text p { margin: 0; }
+
+/* Review carousel */
+.review-carousel { margin-top: 40px; }
+.review-slides {
+  position: relative;
+  max-width: 620px;
+  margin: 0 auto;
+  min-height: 300px;
+}
+.review-slide {
+  margin: 0;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+.review-slide.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  position: relative;
+}
+.review-slide img {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: block;
+}
+.review-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+.review-dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.review-dots span.active { background: var(--accent); transform: scale(1.25); }
 
 /* Contacts */
 .contacts-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
