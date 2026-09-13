@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var carousel = document.getElementById('reviewCarousel');
   if (carousel) {
-    var slides = carousel.querySelectorAll('.review-slide');
+    var slides = carousel.querySelectorAll('.review-page');
     var dotsWrap = document.getElementById('reviewDots');
     var current = 0;
     var timer;
