@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var closeBtn = document.getElementById('modalClose');
     var altSendBtn = document.getElementById('modalAltSend');
     var lastMessage = '';
-    var lastChannel = '';
 
     function openModal() {
       modal.hidden = false;
@@ -96,9 +95,35 @@ document.addEventListener('DOMContentLoaded', function () {
       if (e.target === modal) closeModal();
     });
 
+    var phoneInput = form.phone;
+    phoneInput.addEventListener('input', function () {
+      var digits = phoneInput.value.replace(/\D/g, '');
+      if (digits.length) {
+        if (digits[0] === '8') digits = '7' + digits.slice(1);
+        else if (digits[0] === '9') digits = '7' + digits;
+        else if (digits[0] !== '7') digits = '7' + digits;
+      }
+      digits = digits.slice(0, 11);
+      var rest = digits.slice(1);
+      var out = digits.length ? '+7' : '';
+      if (rest.length > 0) out += ' ' + rest.slice(0, 3);
+      if (rest.length > 3) out += ' ' + rest.slice(3, 6);
+      if (rest.length > 6) out += '-' + rest.slice(6, 8);
+      if (rest.length > 8) out += '-' + rest.slice(8, 10);
+      phoneInput.value = out;
+    });
+
+    function deliveryChannel(pref) { return pref === 'telegram' ? 'telegram' : 'whatsapp'; }
+
     function buildMessage(data) {
-      var lines = ['Заявка с сайта BMW M Service', 'Имя: ' + data.name, 'Телефон: ' + data.phone];
-      if (data.comment) lines.push('Запрос: ' + data.comment);
+      var lines = ['Добрый день! Пишу с сайта BMW M Service по поводу записи в автосервис.', ''];
+      lines.push('Имя: ' + data.name);
+      lines.push('Телефон: ' + data.phone);
+      if (data.comment) lines.push('Что нужно сделать: ' + data.comment);
+      lines.push('');
+      if (data.channel === 'telegram') lines.push('Прошу ответить мне в Telegram.');
+      else if (data.channel === 'call') lines.push('Прошу перезвонить мне по указанному номеру.');
+      else lines.push('Прошу ответить мне в WhatsApp.');
       return lines.join('\n');
     }
     function sendTo(channel, message) {
@@ -109,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
       window.open(url, '_blank');
     }
 
+    var lastDelivery = '';
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var data = {
@@ -119,16 +145,17 @@ document.addEventListener('DOMContentLoaded', function () {
       };
       if (!data.name || !data.phone || !form.consent.checked) return;
       var message = buildMessage(data);
+      var delivery = deliveryChannel(data.channel);
       lastMessage = message;
-      lastChannel = data.channel;
-      sendTo(data.channel, message);
+      lastDelivery = delivery;
+      sendTo(delivery, message);
       form.hidden = true;
       thanks.hidden = false;
-      altSendBtn.textContent = 'Продублировать в ' + (data.channel === 'telegram' ? 'WhatsApp' : 'Telegram');
+      altSendBtn.textContent = 'Продублировать в ' + (delivery === 'telegram' ? 'WhatsApp' : 'Telegram');
     });
 
     altSendBtn.addEventListener('click', function () {
-      var other = lastChannel === 'telegram' ? 'whatsapp' : 'telegram';
+      var other = lastDelivery === 'telegram' ? 'whatsapp' : 'telegram';
       sendTo(other, lastMessage);
     });
   }
