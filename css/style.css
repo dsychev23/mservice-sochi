@@ -45,12 +45,12 @@ p { color: var(--text-dim); margin: 0 0 14px; }
 }
 .m-stripe span { display: none; }
 
-.eyebrow-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-.eyebrow-row .eyebrow-icon { width: 30px; height: auto; flex-shrink: 0; }
+.eyebrow-row { display: flex; align-items: center; gap: clamp(8px, 1.2vw, 14px); margin-bottom: 14px; }
+.eyebrow-row .eyebrow-icon { width: clamp(20px, 2.6vw, 34px); height: auto; flex-shrink: 0; }
 .eyebrow {
   color: var(--accent-blue);
   text-transform: uppercase;
-  font-size: 13px;
+  font-size: clamp(12px, 1.3vw, 15px);
   letter-spacing: 0.14em;
   font-weight: 600;
   display: block;
@@ -73,6 +73,7 @@ p { color: var(--text-dim); margin: 0 0 14px; }
   justify-content: space-between;
   height: 72px;
 }
+.header-badge-mobile { display: none; }
 .logo {
   font-family: "Rajdhani", sans-serif;
   font-weight: 700;
@@ -101,8 +102,11 @@ p { color: var(--text-dim); margin: 0 0 14px; }
   border-radius: 6px;
   font-weight: 600;
   font-size: 14px;
+  font-family: inherit;
   cursor: pointer;
   border: 1px solid transparent;
+  background: transparent;
+  appearance: none;
   transition: transform 0.15s, background 0.15s, border-color 0.15s;
   white-space: nowrap;
 }
@@ -206,7 +210,7 @@ p { color: var(--text-dim); margin: 0 0 14px; }
 .hero-stats div span { font-size: 13px; color: var(--text-dim); }
 
 /* Sections */
-section { padding: 90px 0; border-top: 1px solid var(--border); scroll-margin-top: 84px; }
+section { padding: 90px 0; border-top: 1px solid var(--border); scroll-margin-top: 96px; }
 .section-head { max-width: 640px; margin-bottom: 48px; }
 
 /* Brands strip */
@@ -390,10 +394,55 @@ footer { border-top: 1px solid var(--border); padding: 36px 0; }
   .header-actions { gap: 8px; }
   .header-actions .header-wa { display: none; }
   .header-actions .header-call { display: inline-flex; padding: 7px 12px; font-size: 12px; }
+  .header-badge-mobile {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    font-size: 11px; color: var(--text-dim);
+    padding: 0 12px 10px;
+  }
+  .header-badge-mobile .stars { color: #ffb020; letter-spacing: 1px; }
+  .hero-badge { display: none; }
+  .mobile-menu { inset: 88px 0 0 0; }
 }
 @media (max-width: 560px) {
   .services-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 150px; }
-  .hero { padding-top: 96px; }
+  .hero { padding-top: 112px; }
   .hero-stats { gap: 22px; }
 }
+
+/* Request modal */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.72);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-overlay[hidden] { display: none; }
+.modal-box {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  max-width: 440px; width: 100%; padding: 32px 28px; position: relative;
+  max-height: 90vh; overflow-y: auto;
+}
+.modal-close {
+  position: absolute; top: 14px; right: 14px;
+  background: none; border: none; color: var(--text-dim);
+  font-size: 20px; line-height: 1; cursor: pointer; padding: 4px;
+}
+.modal-close:hover { color: var(--text); }
+.modal-box h3 { font-size: 26px; margin-bottom: 6px; }
+.modal-sub { font-size: 14px; margin-bottom: 22px; }
+.field { display: block; margin-bottom: 16px; }
+.field span { display: block; font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.field input[type="text"], .field input[type="tel"] {
+  width: 100%; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 6px;
+  padding: 11px 12px; color: var(--text); font-size: 15px; font-family: inherit;
+}
+.field input:focus { outline: none; border-color: var(--accent-blue); }
+.field-radio-row { margin-bottom: 18px; }
+.field-radio-row > span { display: block; font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.radio-group { display: flex; gap: 20px; }
+.radio-group label { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--text); cursor: pointer; }
+.consent-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; font-size: 13px; color: var(--text-dim); cursor: pointer; }
+.consent-row a { color: var(--accent-blue); text-decoration: underline; }
+.consent-row input { margin-top: 3px; flex-shrink: 0; }
+.modal-thanks p { color: var(--text); margin-bottom: 20px; }

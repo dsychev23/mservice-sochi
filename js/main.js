@@ -53,4 +53,83 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
+
+  var addressLink = document.getElementById('addressLink');
+  if (addressLink) {
+    var ua = navigator.userAgent || '';
+    var lat = 43.568844, lon = 39.754118;
+    var label = encodeURIComponent('БМВ М сервис');
+    if (/iPhone|iPad|iPod/i.test(ua)) {
+      addressLink.href = 'https://maps.apple.com/?ll=' + lat + ',' + lon + '&q=' + label;
+    } else if (/Android/i.test(ua)) {
+      addressLink.href = 'geo:' + lat + ',' + lon + '?q=' + lat + ',' + lon + '(' + label + ')';
+    }
+  }
+
+  var modal = document.getElementById('requestModal');
+  if (modal) {
+    var form = document.getElementById('requestForm');
+    var thanks = document.getElementById('modalThanks');
+    var closeBtn = document.getElementById('modalClose');
+    var altSendBtn = document.getElementById('modalAltSend');
+    var lastMessage = '';
+    var lastChannel = '';
+
+    function openModal() {
+      modal.hidden = false;
+      form.hidden = false;
+      thanks.hidden = true;
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('.js-open-request').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal();
+      });
+    });
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+
+    function buildMessage(data) {
+      var lines = ['Заявка с сайта BMW M Service', 'Имя: ' + data.name, 'Телефон: ' + data.phone];
+      if (data.comment) lines.push('Запрос: ' + data.comment);
+      return lines.join('\n');
+    }
+    function sendTo(channel, message) {
+      var encoded = encodeURIComponent(message);
+      var url = channel === 'telegram'
+        ? 'https://t.me/bmwmservicesochi?text=' + encoded
+        : 'https://wa.me/79186110011?text=' + encoded;
+      window.open(url, '_blank');
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = {
+        name: form.name.value.trim(),
+        phone: form.phone.value.trim(),
+        comment: form.comment.value.trim(),
+        channel: form.channel.value
+      };
+      if (!data.name || !data.phone || !form.consent.checked) return;
+      var message = buildMessage(data);
+      lastMessage = message;
+      lastChannel = data.channel;
+      sendTo(data.channel, message);
+      form.hidden = true;
+      thanks.hidden = false;
+      altSendBtn.textContent = 'Продублировать в ' + (data.channel === 'telegram' ? 'WhatsApp' : 'Telegram');
+    });
+
+    altSendBtn.addEventListener('click', function () {
+      var other = lastChannel === 'telegram' ? 'whatsapp' : 'telegram';
+      sendTo(other, lastMessage);
+    });
+  }
 });

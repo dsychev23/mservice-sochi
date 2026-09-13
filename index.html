@@ -81,6 +81,7 @@
       <button class="burger" id="burgerBtn" aria-label="Меню">☰</button>
     </div>
   </div>
+  <div class="header-badge-mobile"><span class="stars">★★★★★</span> 5.0 · 111 отзывов на Яндекс.Картах</div>
 </header>
 
 <div class="mobile-menu" id="mobileMenu">
@@ -125,6 +126,7 @@
       <a href="tel:+79186110011" class="btn btn-primary">Позвонить</a>
       <a href="https://wa.me/79186110011" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>
       <a href="https://t.me/bmwmservicesochi" class="btn btn-tg" target="_blank" rel="noopener">Telegram</a>
+      <button type="button" class="btn btn-outline js-open-request">Оставить заявку</button>
     </div>
     <div class="hero-stats">
       <div><strong>5.0</strong><span>рейтинг Яндекс.Карт</span></div>
@@ -357,7 +359,7 @@
       <div class="contact-card">
         <div class="contact-row">
           <span class="ic">📍</span>
-          <div><div class="lbl">Адрес</div><div class="val">ул. 20 Горнострелковой дивизии, 17, Сочи</div></div>
+          <div><div class="lbl">Адрес</div><div class="val"><a id="addressLink" href="https://yandex.ru/maps/239/sochi/?ll=39.754223%2C43.569083&mode=poi&poi%5Bpoint%5D=39.754118%2C43.568844&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D9945798683&z=20" target="_blank" rel="noopener">ул. 20 Горнострелковой дивизии, 17, Сочи</a></div></div>
         </div>
         <div class="contact-row">
           <span class="ic">📞</span>
@@ -383,6 +385,7 @@
           </div>
         </div>
         <a href="tel:+79186110011" class="btn btn-primary" style="width:100%;margin-top:22px;">Позвонить сейчас</a>
+        <button type="button" class="btn btn-outline js-open-request" style="width:100%;margin-top:10px;">Оставить заявку</button>
       </div>
       <div class="map-wrap">
         <iframe src="https://yandex.ru/map-widget/v1/?ll=39.754118%2C43.568844&z=17&pt=39.754118,43.568844,pm2rdl" allowfullscreen title="БМВ М сервис на карте Сочи"></iframe>
@@ -394,9 +397,10 @@
 <div class="cta-band">
   <div class="container">
     <h2>Запишитесь на диагностику</h2>
-    <p>Ответим быстро — по телефону, в WhatsApp или Telegram</p>
+    <p>Оставьте заявку, или ответим быстро по телефону, в WhatsApp или Telegram</p>
     <div class="btn-row">
-      <a href="tel:+79186110011" class="btn btn-primary">+7 918 611-00-11</a>
+      <button type="button" class="btn btn-primary js-open-request">Оставить заявку</button>
+      <a href="tel:+79186110011" class="btn btn-outline">+7 918 611-00-11</a>
       <a href="https://wa.me/79186110011" class="btn btn-wa" target="_blank" rel="noopener">WhatsApp</a>
       <a href="https://t.me/bmwmservicesochi" class="btn btn-tg" target="_blank" rel="noopener">Telegram</a>
     </div>
@@ -415,6 +419,45 @@
     </div>
   </div>
 </footer>
+
+<div class="modal-overlay" id="requestModal" hidden>
+  <div class="modal-box">
+    <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
+    <form id="requestForm">
+      <h3>Оставить заявку</h3>
+      <p class="modal-sub">Оставьте контакты — свяжемся в удобном для вас мессенджере.</p>
+      <label class="field">
+        <span>Имя</span>
+        <input type="text" name="name" required placeholder="Как к вам обращаться">
+      </label>
+      <label class="field">
+        <span>Телефон</span>
+        <input type="tel" name="phone" required placeholder="+7 900 000-00-00">
+      </label>
+      <label class="field">
+        <span>Что нужно сделать (необязательно)</span>
+        <input type="text" name="comment" placeholder="Например: диагностика, замена масла">
+      </label>
+      <div class="field-radio-row">
+        <span>Куда ответить</span>
+        <div class="radio-group">
+          <label><input type="radio" name="channel" value="whatsapp" checked> WhatsApp</label>
+          <label><input type="radio" name="channel" value="telegram"> Telegram</label>
+        </div>
+      </div>
+      <label class="consent-row">
+        <input type="checkbox" name="consent" checked>
+        <span>Согласен(а) с <a href="privacy-policy.html" target="_blank" rel="noopener">политикой обработки персональных данных</a></span>
+      </label>
+      <button type="submit" class="btn btn-primary" style="width:100%">Отправить заявку</button>
+    </form>
+    <div class="modal-thanks" id="modalThanks" hidden>
+      <h3>Заявка сформирована</h3>
+      <p>Сейчас откроется выбранный мессенджер — останется нажать «отправить».</p>
+      <button type="button" class="btn btn-outline" id="modalAltSend" style="width:100%">Продублировать в другой мессенджер</button>
+    </div>
+  </div>
+</div>
 
 <script src="js/main.js"></script>
 </body>
