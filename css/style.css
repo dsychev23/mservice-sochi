@@ -401,7 +401,7 @@ footer { border-top: 1px solid var(--border); padding: 36px 0; }
   .logo small:not(.logo-rating) { display: none; }
   .m-stripe { width: 34px; height: 13px; }
   .header-actions { gap: 8px; }
-  .header-actions .header-wa { display: none; }
+  .header-actions .header-request { display: none; }
   .header-actions .header-call { display: inline-flex; padding: 7px 12px; font-size: 12px; }
   .logo-rating { display: block; font-size: 10px; color: var(--text-dim); letter-spacing: 0.02em; margin-top: 1px; }
   .hero-badge { display: none; }
