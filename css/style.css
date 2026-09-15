@@ -80,6 +80,8 @@ p { color: var(--text-dim); margin: 0 0 14px; }
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .logo .m-stripe { margin-bottom: 0; }
 .logo small:not(.logo-rating) { display: block; font-size: 11px; font-weight: 400; color: var(--text-dim); letter-spacing: 0.08em; }
@@ -91,7 +93,6 @@ p { color: var(--text-dim); margin: 0 0 14px; }
 .nav-links a:hover { color: var(--text); }
 
 .header-actions { display: flex; align-items: center; gap: 12px; }
-.phone-link { font-weight: 600; font-size: 16px; white-space: nowrap; }
 .header-actions .header-call { display: none; }
 
 .btn {
@@ -388,16 +389,11 @@ footer { border-top: 1px solid var(--border); padding: 36px 0; }
 .footer-row .fine { font-size: 13px; color: var(--text-dim); }
 .footer-socials { display: flex; gap: 16px; }
 
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
   .nav-links, .header-actions .phone-link, .header-actions .btn-outline { display: none; }
   .burger { display: block; }
-  .split { grid-template-columns: 1fr; gap: 30px; }
-  .services-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
-  .contacts-grid { grid-template-columns: 1fr; }
-  .reviews-banner { justify-content: center; text-align: center; }
   .site-header .container { height: 60px; }
-  .logo { font-size: 15px; gap: 8px; white-space: nowrap; }
+  .logo { font-size: 15px; gap: 8px; white-space: nowrap; flex-shrink: 0; }
   .logo small:not(.logo-rating) { display: none; }
   .m-stripe { width: 34px; height: 13px; }
   .header-actions { gap: 8px; }
@@ -406,6 +402,13 @@ footer { border-top: 1px solid var(--border); padding: 36px 0; }
   .logo-rating { display: block; font-size: 10px; color: var(--text-dim); letter-spacing: 0.02em; margin-top: 1px; }
   .hero-badge { display: none; }
   .mobile-menu { inset: 60px 0 0 0; }
+}
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; gap: 30px; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+  .contacts-grid { grid-template-columns: 1fr; }
+  .reviews-banner { justify-content: center; text-align: center; }
 }
 @media (max-width: 560px) {
   .services-grid { grid-template-columns: 1fr; }
